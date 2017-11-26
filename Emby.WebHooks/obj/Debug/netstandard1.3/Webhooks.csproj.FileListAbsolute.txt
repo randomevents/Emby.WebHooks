@@ -1,0 +1,9 @@
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.deps.json
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.pdb
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.csprojResolveAssemblyReference.cache
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.csproj.CoreCompileInputs.cache
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfoInputs.cache
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfo.cs
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug\netstandard1.3\Emby.WebHooks.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug\netstandard1.3\Emby.WebHooks.pdb

@@ -1,0 +1,16 @@
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Release\net46\Webhooks.csprojResolveAssemblyReference.cache
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Release\net46\Webhooks.csproj.CoreCompileInputs.cache
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Release\net46\Webhooks.AssemblyInfoInputs.cache
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Release\net46\Webhooks.AssemblyInfo.cs
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\Emby.WebHooks.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\Emby.WebHooks.pdb
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\MediaBrowser.Common.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\MediaBrowser.Model.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\MediaBrowser.Controller.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\System.Net.Http.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\System.Security.Cryptography.Algorithms.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\System.Security.Cryptography.Encoding.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\System.Security.Cryptography.Primitives.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\bin\Release\net46\System.Security.Cryptography.X509Certificates.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Release\net46\Emby.WebHooks.dll
+C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Release\net46\Emby.WebHooks.pdb
