@@ -16,3 +16,12 @@ C:\Files - Programming\Projects\Emby.WebHooks\Emby.Webhooks\obj\Release\netstand
 C:\Files - Programming\Projects\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Webhooks.AssemblyInfo.cs
 C:\Files - Programming\Projects\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Emby.WebHooks.dll
 C:\Files - Programming\Projects\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Emby.WebHooks.pdb
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\bin\Release\netstandard1.3\Emby.WebHooks.deps.json
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\bin\Release\netstandard1.3\Emby.WebHooks.dll
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\bin\Release\netstandard1.3\Emby.WebHooks.pdb
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Webhooks.csprojResolveAssemblyReference.cache
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Webhooks.csproj.CoreCompileInputs.cache
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Webhooks.AssemblyInfoInputs.cache
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Webhooks.AssemblyInfo.cs
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Emby.WebHooks.dll
+C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Release\netstandard1.3\Emby.WebHooks.pdb

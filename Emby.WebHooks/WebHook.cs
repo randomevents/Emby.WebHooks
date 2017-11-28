@@ -3,6 +3,7 @@ using MediaBrowser.Controller;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Plugins;
 using MediaBrowser.Controller.Session;
+using MediaBrowser.Controller.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 using Emby.WebHooks.Configuration;
 using System.IO;
 using MediaBrowser.Model.Logging;
-using MediaBrowser.Model.Serialization;
+using MediaBrowser.Model.System;
 using MediaBrowser.Common.Net;
 using MediaBrowser.Controller.Notifications;
 using System.Threading;
@@ -23,7 +24,8 @@ namespace Emby.WebHooks
     public class WebHooks : IServerEntryPoint
     {
         private readonly ISessionManager _sessionManager;
-        private readonly IUserDataManager _userDataManager;
+        private readonly IUserManager _userManager;
+        private readonly ISyncManager _syncManager;
         private readonly ILogger _logger;
         private readonly ILibraryManager _libraryManager;
         private readonly IHttpClient _httpClient;
@@ -55,12 +57,13 @@ namespace Emby.WebHooks
             get { return "WebHooks"; }
         }
 
-        public WebHooks(ISessionManager sessionManager, IHttpClient httpClient, ILogManager logManager, IUserDataManager userDataManager, ILibraryManager libraryManager, INetworkManager networkManager, IServerApplicationHost appHost)
+        public WebHooks(ISessionManager sessionManager, IHttpClient httpClient, ILogManager logManager, IUserManager userManager, ILibraryManager libraryManager, INetworkManager networkManager, IServerApplicationHost appHost, ISyncManager syncManager)
         {
             _logger = logManager.GetLogger(Plugin.Instance.Name);
-            _libraryManager = libraryManager;
-            _sessionManager = sessionManager;
-            _userDataManager = userDataManager;
+            _libraryManager = libraryManager; //ItemRemoved
+            _sessionManager = sessionManager; //AuthenticationFailed SessionStarted SessionEnded SessionActivity AuthenticationSucceeded
+            _userManager = userManager; //UserLockedOut
+            _syncManager = syncManager; //SyncJobItemCreated SyncJobCreated SyncJobCancelled SyncJobItemCancelled
             _httpClient = httpClient;
             _networkManager = networkManager;
             _appHost = appHost;
@@ -177,7 +180,7 @@ namespace Emby.WebHooks
                     string msgString = buildJson_Playback(h, _sessionManager.GetSession(e.DeviceId.ToString(), e.ClientName, ""), e, action);
                     if (msgString != "_redundant_")
                     {
-                        SendHook(h, buildJson_Playback(h, _sessionManager.GetSession(e.DeviceId.ToString(), e.ClientName, ""), e, action));
+                        SendHook(h, msgString);
                     }
                 }
             }
@@ -209,13 +212,13 @@ namespace Emby.WebHooks
 
         public string buildJson_Added(PluginConfiguration.Hook hooks, BaseItem e, string trigger)
         {
-            string msgAdded = buildJson_BaseItem(hooks.msgHook, e);
+            string msgAdded = buildJson_BaseItem(hooks.removeQuotes, hooks.msgHook, e);
 
-            return msgAdded.Replace("{Event}", testString(trigger, true)).
-            Replace("{ServerID}", testString(_appHost.SystemId, true)).
-            Replace("{ServerName}", testString(_appHost.FriendlyName, true)).
+            return msgAdded.Replace("{Event}", testString(hooks.removeQuotes, trigger, true)).
+            Replace("{ServerID}", testString(hooks.removeQuotes, _appHost.SystemId, true)).
+            Replace("{ServerName}", testString(hooks.removeQuotes, _appHost.FriendlyName, true)).
 
-            Replace("{TimeStamp}", testString(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
+            Replace("{TimeStamp}", testString(hooks.removeQuotes, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
         }
 
         public string buildJson_Playback(PluginConfiguration.Hook hooks, SessionInfo sessionInfo, PlaybackProgressEventArgs playbackData, string trigger)
@@ -224,55 +227,72 @@ namespace Emby.WebHooks
 
             string playbackTicks = (string.IsNullOrEmpty(playbackData.PlaybackPositionTicks.ToString())) ? sessionInfo.PlayState.PositionTicks.ToString() : playbackData.PlaybackPositionTicks.ToString();
 
-            string msgPlayback = buildJson_BaseItem(hooks.msgHook, sessionInfo.FullNowPlayingItem);
+            string msgPlayback = buildJson_BaseItem(hooks.removeQuotes, hooks.msgHook, sessionInfo.FullNowPlayingItem);
 
-            return msgPlayback.Replace("{Event}", testString(trigger, true)).
-            Replace("{ServerID}", testString(_appHost.SystemId, true)).
-            Replace("{ServerName}", testString(_appHost.FriendlyName, true)).
+            return msgPlayback.Replace("{Event}", testString(hooks.removeQuotes, trigger, true)).
+            Replace("{ServerID}", testString(hooks.removeQuotes, _appHost.SystemId, true)).
+            Replace("{ServerName}", testString(hooks.removeQuotes, _appHost.FriendlyName, true)).
             
-            Replace("{UserID}", testString(sessionInfo.UserId.ToString(), true)).
-            Replace("{UserName}", testString(sessionInfo.UserName, true)).
+            Replace("{UserID}", testString(hooks.removeQuotes, sessionInfo.UserId.ToString(), true)).
+            Replace("{UserName}", testString(hooks.removeQuotes, sessionInfo.UserName, true)).
             
-            Replace("{AppName}", testString(sessionInfo.Client, true)).
-            Replace("{DeviceID}", testString(sessionInfo.DeviceId.ToString(), true)).
-            Replace("{DeviceName}", testString(sessionInfo.DeviceName, true)).
-            Replace("{DeviceIP}", testString(sessionInfo.RemoteEndPoint.ToString(), true)).
+            Replace("{AppName}", testString(hooks.removeQuotes, sessionInfo.Client, true)).
+            Replace("{DeviceID}", testString(hooks.removeQuotes, sessionInfo.DeviceId.ToString(), true)).
+            Replace("{DeviceName}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
+            Replace("{DeviceIP}", testString(hooks.removeQuotes, sessionInfo.RemoteEndPoint.ToString(), true)).
 
-            Replace("{SessionID}", testString(sessionInfo.Id, true)).
-            Replace("{SessionPlaybackPositionTicks}", testString(playbackTicks, false)).
-            Replace("{TimeStamp}", testString(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
+            Replace("{SessionID}", testString(hooks.removeQuotes, sessionInfo.Id, true)).
+            Replace("{SessionPlaybackPositionTicks}", testString(hooks.removeQuotes, playbackTicks, false)).
+            Replace("{TimeStamp}", testString(hooks.removeQuotes, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
         }
 
-        public string buildJson_BaseItem(string inStr, BaseItem e) {
-            return inStr.Replace("{ItemType}", testString(_libraryManager.GetContentType(e), true)).
-            Replace("{ItemName}", testString(e.Name, true)).
-            Replace("{ItemNameParent}", testString(e.Parent.Name, true)).
-            Replace("{ItemNameGrandparent}", testString(e.Parent.Parent.Name, true)).
-            Replace("{ItemID}", testString(e.Id.ToString(), true)).
-            Replace("{ItemRunTimeTicks}", testString(e.RunTimeTicks.ToString(), false)).
-            Replace("{ItemIndex}", testString(e.IndexNumber.ToString(), false)).
-            Replace("{ItemParentIndex}", testString(e.ParentIndexNumber.ToString(), false)).
-            Replace("{ItemCriticRating}", testString(e.CriticRating.ToString(), false)).
-            Replace("{ItemCommunityRating}", testString(e.CommunityRating.ToString(), false)).
-            Replace("{ItemPremiereDate}", testString(e.PremiereDate.ToString(), true)).
-            Replace("{ItemDateAdded}", testString(e.DateCreated.ToString(), true)).
-            Replace("{ItemYear}", testString(e.ProductionYear.ToString(), false)).
-            Replace("{ItemBitrate}", testString(e.TotalBitrate.ToString(), false)).
-            Replace("{ItemGenre}", testString(string.Join(",", e.Genres), true));
+        public string buildJson_BaseItem(bool removeQuotes, string inStr, BaseItem e) {
+            return inStr.Replace("{ItemType}", testString(removeQuotes, _libraryManager.GetContentType(e), true)).
+            Replace("{ItemName}", testString(removeQuotes, e.Name, true)).
+            Replace("{ItemNameParent}", testString(removeQuotes, e.Parent.Name, true)).
+            Replace("{ItemNameGrandparent}", testString(removeQuotes, e.Parent.Parent.Name, true)).
+            Replace("{ItemID}", testString(removeQuotes, e.Id.ToString(), true)).
+            Replace("{ItemRunTimeTicks}", testString(removeQuotes, e.RunTimeTicks.ToString(), false)).
+            Replace("{ItemIndex}", testString(removeQuotes, e.IndexNumber.ToString(), false)).
+            Replace("{ItemParentIndex}", testString(removeQuotes, e.ParentIndexNumber.ToString(), false)).
+            Replace("{ItemCriticRating}", testString(removeQuotes, e.CriticRating.ToString(), false)).
+            Replace("{ItemCommunityRating}", testString(removeQuotes, e.CommunityRating.ToString(), false)).
+            Replace("{ItemPremiereDate}", testString(removeQuotes, e.PremiereDate.ToString(), true)).
+            Replace("{ItemDateAdded}", testString(removeQuotes, e.DateCreated.ToString(), true)).
+            Replace("{ItemYear}", testString(removeQuotes, e.ProductionYear.ToString(), false)).
+            Replace("{ItemBitrate}", testString(removeQuotes, e.TotalBitrate.ToString(), false)).
+            Replace("{ItemGenre}", testString(removeQuotes, string.Join(",", e.Genres), true));
         }
 
-        public string testString(string inStr, bool isString)
+        public string testString(bool removeQuotes, string inStr, bool isString)
         {
-            if (string.IsNullOrEmpty(inStr))
+            if (removeQuotes)
             {
-                if (isString) return "\"\"";
+                if (string.IsNullOrEmpty(inStr))
+                {
+                    if (isString) return "";
 
-                return "0";
+                    return "0";
+                }
+                else
+                {
+                    return inStr;
+                }
             }
-            else {
-                if (isString) return "\"" + inStr + "\"";
+            else
+            {
+                if (string.IsNullOrEmpty(inStr))
+                {
+                    if (isString) return "\"\"";
 
-                return inStr;
+                    return "0";
+                }
+                else
+                {
+                    if (isString) return "\"" + inStr + "\"";
+
+                    return inStr;
+                }
             }
         }
     }
