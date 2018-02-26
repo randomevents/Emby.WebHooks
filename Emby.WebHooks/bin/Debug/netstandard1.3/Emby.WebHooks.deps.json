@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v1.3/",
-    "signature": "9cab4344e4f25e315680c15ec0a09fd5c679a022"
+    "signature": "9335cffd231f8dcff799faa5a8032328705a6245"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,22 +9,22 @@
     ".NETStandard,Version=v1.3/": {
       "Emby.WebHooks/2.0.0": {
         "dependencies": {
-          "NETStandard.Library": "1.6.1",
-          "MediaBrowser.Server.Core": "3.3.15"
+          "MediaBrowser.Server.Core": "3.3.28",
+          "NETStandard.Library": "1.6.1"
         },
         "runtime": {
           "Emby.WebHooks.dll": {}
         }
       },
-      "MediaBrowser.Common/3.3.15": {
+      "MediaBrowser.Common/3.3.28": {
         "runtime": {
           "lib/netstandard1.3/MediaBrowser.Common.dll": {},
           "lib/netstandard1.3/MediaBrowser.Model.dll": {}
         }
       },
-      "MediaBrowser.Server.Core/3.3.15": {
+      "MediaBrowser.Server.Core/3.3.28": {
         "dependencies": {
-          "MediaBrowser.Common": "3.3.15"
+          "MediaBrowser.Common": "3.3.28"
         },
         "runtime": {
           "lib/netstandard1.3/MediaBrowser.Controller.dll": {}
@@ -585,19 +585,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "MediaBrowser.Common/3.3.15": {
+    "MediaBrowser.Common/3.3.28": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0WbRrVwx3PXtCkcgLuBzponoP/ytOp8l5vWY1ficJRvrdbPioNcosvp0UfKXuvDPIdGaJERn232NBSjYnEZY0w==",
-      "path": "mediabrowser.common/3.3.15",
-      "hashPath": "mediabrowser.common.3.3.15.nupkg.sha512"
+      "sha512": "sha512-vObtul0f6rtEYZaD/16eXxa0trvASzXS4uOdxvysuEIaCZZw9HfGOoQB41BvfGG87nbZv0n0eOv2Uw4yIztl5g==",
+      "path": "mediabrowser.common/3.3.28",
+      "hashPath": "mediabrowser.common.3.3.28.nupkg.sha512"
     },
-    "MediaBrowser.Server.Core/3.3.15": {
+    "MediaBrowser.Server.Core/3.3.28": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-2KQEM1qvlk8Gh3K3zaJHa++/fmmiLwg5qIbbzAF18P8BlFxK2hQiEdVGMVOm4RX5aLAouftaAO+CUca2oz6cSw==",
-      "path": "mediabrowser.server.core/3.3.15",
-      "hashPath": "mediabrowser.server.core.3.3.15.nupkg.sha512"
+      "sha512": "sha512-KqrIbBh5w3Qt723dwxPGaaErTXlEV4r4EAyowusH+5Jdyby0rIUAl2N8t4R6CH+rR6ZjQ/S7Wbp8u6Li8Tn3Ag==",
+      "path": "mediabrowser.server.core/3.3.28",
+      "hashPath": "mediabrowser.server.core.3.3.28.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",

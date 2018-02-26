@@ -10,7 +10,6 @@ C:\Users\random.events\Source\Repos\emby.plugin.Webhooks\Emby.Webhooks\obj\Debug
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.deps.json
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.dll
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.pdb
-C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.csprojResolveAssemblyReference.cache
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.csproj.CoreCompileInputs.cache
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfoInputs.cache
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfo.cs

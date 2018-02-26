@@ -236,7 +236,7 @@ namespace Emby.WebHooks
             Replace("{UserID}", testString(hooks.removeQuotes, sessionInfo.UserId.ToString(), true)).
             Replace("{UserName}", testString(hooks.removeQuotes, sessionInfo.UserName, true)).
             
-            Replace("{AppName}", testString(hooks.removeQuotes, sessionInfo.Client, true)).
+            Replace("{AppName}", testString(hooks.removeQuotes, sessionInfo.AppName, true)).
             Replace("{DeviceID}", testString(hooks.removeQuotes, sessionInfo.DeviceId.ToString(), true)).
             Replace("{DeviceName}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
             Replace("{DeviceIP}", testString(hooks.removeQuotes, sessionInfo.RemoteEndPoint.ToString(), true)).
