@@ -5,50 +5,61 @@
 </head>
 <body>
     <div data-role="page" class="page type-interior pluginConfigurationPage WebHooksPage" data-require="emby-select,emby-checkbox,emby-input,emby-button,emby-textarea">
-        <div id="itemTemplate" class="paperList" style="display:none;">
-            <div class="listItem">
-                <div class="listItemBody two-line">
+        <div id="itemTemplate" style="display:none;">
+            <div class="singleHook">
+                <div>
                     <div>
-                        <div class="inputContainer">
-                            <h3>WebHook Server</h3>
-                            <input is="emby-input" type="text" class="txtUrl" label="URL:Port"/>
+                        <div class="inputContainer" style="display: inline-flex; margin-bottom: 1em;">
+                            <input is="emby-input" type="text" class="txtTitle"/>
+                            <button is="emby-button" data-action="expandCollapse" type="button" class="button-submit emby-button">Expand</button>
+                            <button title="Delete" class="btnDeleteDevice paper-icon-button-light removeHook listItemButton" type="button" is="paper-icon-button-light"><i class="md-icon">delete</i></button>
                         </div>
                     </div>
-                    <div>
-                        <h3>Media Types</h3>
-                        <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                            <input is="emby-checkbox" type="checkbox" class="chkMovies" />
-                            <span>Movies</span>
-                        </label>
-                        <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                            <input is="emby-checkbox" type="checkbox" class="chkEpisodes" />
-                            <span>TV Shows</span>
-                        </label>
-                        <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                            <input is="emby-checkbox" type="checkbox" class="chkSongs" />
-                            <span>Music</span>
-                        </label>
-                    </div>
-                    <div>
-                        <h3>Playback Events</h3>
-                        <div style="display:flex">
-                            <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                                <input is="emby-checkbox" type="checkbox" class="chkOnPlay" />
-                                <span>Play</span>
-                            </label>
-                            <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                                <input is="emby-checkbox" type="checkbox" class="chkOnPause" />
-                                <span>Pause</span>
-                            </label>
-                            <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                                <input is="emby-checkbox" type="checkbox" class="chkOnStop" />
-                                <span>Stop</span>
-                            </label>
-                            <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                                <input is="emby-checkbox" type="checkbox" class="chkOnResume" />
-                                <span>Resume</span>
-                            </label>
+                    <div class="content" style="display:none;">
+                        <div>
                             <div class="inputContainer">
+                                <input is="emby-input" type="text" class="txtUrl" label="URL:Port"/>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="checkboxListLabel">Media Types</h3>
+                            <div class="paperList checkboxList-paperList">
+                            <label>
+                                <input is="emby-checkbox" type="checkbox" class="chkMovies" />
+                                <span>Movies</span>
+                            </label>
+                            <label>
+                                <input is="emby-checkbox" type="checkbox" class="chkEpisodes" />
+                                <span>TV Shows</span>
+                            </label>
+                            <label>
+                                <input is="emby-checkbox" type="checkbox" class="chkSongs" />
+                                <span>Music</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="checkboxListLabel">Playback Events</h3>
+                            <div class="paperList checkboxList-paperList">
+                                <label>
+                                    <input is="emby-checkbox" type="checkbox" class="chkOnPlay" />
+                                    <span>Play</span>
+                                </label>
+                                <label>
+                                    <input is="emby-checkbox" type="checkbox" class="chkOnPause" />
+                                    <span>Pause</span>
+                                </label>
+                                <label>
+                                    <input is="emby-checkbox" type="checkbox" class="chkOnStop" />
+                                    <span>Stop</span>
+                                </label>
+                                <label>
+                                    <input is="emby-checkbox" type="checkbox" class="chkOnResume" />
+                                    <span>Resume</span>
+                                </label>
+                            </div>
+                            <div class="inputContainer">
+                                <h3 class="inputLabel inputLabelUnfocused">Playback Payload</h3>
                                 <textarea is="emby-textarea" type="text" class="emby-textarea txtPlayback" rows="7" label="Message"></textarea>
                             </div>
                             <div class="fieldDescription">
@@ -59,7 +70,6 @@
                                     <li>{{ServerName}} (string)</li>
                                     <li>{{UserID}} (string)</li>
                                     <li>{{UserName}} (string)</li>
-                                    <li>{{AppName}} (string)</li>
                                     <li>{{DeviceID}} (string)</li>
                                     <li>{{DeviceName}} (string)</li>
                                     <li>{{DeviceIP}} (string)</li>
@@ -83,45 +93,46 @@
                                     <li>{{TimeStamp}} (string/yyyy-MM-dd HH:mm:ss.fff)</li>
                                 </ul>
                             </div>
-                        </div>
-                        <h3>Server Events</h3>
-                        <div style="display:flex">
-                            <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                                <input is="emby-checkbox" type="checkbox" class="chkOnItemAdded" />
-                                <span>Item Added</span>
-                            </label>
-                        </div>
-                        <div class="inputContainer">
-                            <textarea is="emby-textarea" type="text" class="emby-textarea txtServer" rows="7" label="Message"></textarea>
-                        </div>
-                        <div class="fieldDescription">
-                            Available Keywords:
-                            <ul style="columns: 3;">
-                                <li>{{Event}} (string)</li>
-                                <li>{{ServerID}} (string)</li>
-                                <li>{{ServerName}} (string)</li>
-                                <li>{{ItemType}}  (string)</li>
-                                <li>{{ItemName}}  (string)</li>
-                                <li>{{ItemNameParent}}  (string)</li>
-                                <li>{{ItemNameGrandparent}}  (string)</li>
-                                <li>{{ItemID}}  (string)</li>
-                                <li>{{ItemRunTimeTicks}}  (int)</li>
-                                <li>{{ItemIndex}}  (int)</li>
-                                <li>{{ItemParentIndex}}  (int)</li>
-                                <li>{{ItemCriticRating}}  (float)</li>
-                                <li>{{ItemCommunityRating}}  (float)</li>
-                                <li>{{ItemPremiereDate}}  (string)</li>
-                                <li>{{ItemDateAdded}}  (string)</li>
-                                <li>{{ItemYear}}  (int)</li>
-                                <li>{{ItemBitrate}}  (int)</li>
-                                <li>{{ItemGenre}}  (string)</li>
-                                <li>{{TimeStamp}} (string/yyyy-MM-dd HH:mm:ss.fff)</li>
-                            </ul>
+                            <h3 class="checkboxListLabel">Server Events</h3>
+                            <div class="paperList checkboxList-paperList">
+                                <label>
+                                    <input is="emby-checkbox" type="checkbox" class="chkOnItemAdded" />
+                                    <span>Item Added</span>
+                                </label>
+                            </div>
+                            <div class="inputContainer">
+                                <h3 class="inputLabel inputLabelUnfocused">Server Payload</h3>
+                                <textarea is="emby-textarea" type="text" class="emby-textarea txtServer" rows="7" label="Message"></textarea>
+                            </div>
+                            <div class="fieldDescription">
+                                Available Keywords:
+                                <ul style="columns: 3;">
+                                    <li>{{Event}} (string)</li>
+                                    <li>{{ServerID}} (string)</li>
+                                    <li>{{ServerName}} (string)</li>
+                                    <li>{{ItemType}}  (string)</li>
+                                    <li>{{ItemName}}  (string)</li>
+                                    <li>{{ItemNameParent}}  (string)</li>
+                                    <li>{{ItemNameGrandparent}}  (string)</li>
+                                    <li>{{ItemID}}  (string)</li>
+                                    <li>{{ItemRunTimeTicks}}  (int)</li>
+                                    <li>{{ItemIndex}}  (int)</li>
+                                    <li>{{ItemParentIndex}}  (int)</li>
+                                    <li>{{ItemCriticRating}}  (float)</li>
+                                    <li>{{ItemCommunityRating}}  (float)</li>
+                                    <li>{{ItemPremiereDate}}  (string)</li>
+                                    <li>{{ItemDateAdded}}  (string)</li>
+                                    <li>{{ItemYear}}  (int)</li>
+                                    <li>{{ItemBitrate}}  (int)</li>
+                                    <li>{{ItemGenre}}  (string)</li>
+                                    <li>{{TimeStamp}} (string/yyyy-MM-dd HH:mm:ss.fff)</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button title="Delete" class="btnDeleteDevice paper-icon-button-light removeHook listItemButton" type="button" is="paper-icon-button-light"><i class="md-icon">delete</i></button>
             </div>
+            <hr>
         </div>
 
         <div data-role="content">
@@ -129,7 +140,7 @@
 
                 <form class="WebHooksForm">
                     <h1 style="display:inline-block;vertical-align:middle;">WebHooks</h1>
-                    <button title="Add" class="raised btnAddDevice submit mini emby-button" id="testNotification"
+                    <button title="Add" class="raised btnAddDevice submit mini emby-button" id="addHook"
                             style="margin-left:1em;" type="button" is="emby-button">
                         <i class="md-icon">add</i>
                         <span>Add</span>
@@ -150,7 +161,6 @@
             (function () {
 
                 var pluginId = "426eb1da-a1de-4ae2-bb79-cb7acb302997";
-
                 function loadUserConfig(page, userId) {
 
                     Dashboard.showLoadingMsg();
@@ -168,11 +178,21 @@
                         $(this).parent().parent().remove();
                     });
 
-                    $('#testNotification', page).on('click', function (event) {
+                    $(page).on("click", '[data-action="expandCollapse"]', function toggleContent() {
+                        $(this).find('i').toggleClass('emby-collapse-expandIconExpanded');
+                        if ($(this).text === 'Expand')
+                            $(this).text('Collapse');
+                        else
+                            $(this).text('Expand');
+                        
+                        $(this).closest('.singleHook').find('.content').toggle(800);
+                    });
+                    
+
+                    $('#addHook', page).on('click', function (event) {
 
                         Dashboard.showLoadingMsg();
                         var a = $('#itemTemplate').clone();
-
                         $('#Hooks', page).append(a);
                         $(a).show();
 
@@ -187,9 +207,10 @@
                         var form = this;
 
                         var config = { Hooks: [] };
-                        $('#Hooks .listItem', form).each(function (i) {
+                        $('#Hooks .singleHook', form).each(function (i) {
                             config.Hooks.push(
                                 {
+                                    Name: $(this).find('.txtTitle').first().val(),
                                     URL: $(this).find('.txtUrl').first().val(),
                                     onPlay: $(this).find('.chkOnPlay').first().checked(),
                                     onPause: $(this).find('.chkOnPause').first().checked(),
@@ -226,6 +247,7 @@
 
                             $(a).show();
                             $('#Hooks', page).append(a);
+                            $(a).find('.txtTitle').first().val(config.Hooks[i].Name || 'My Webhook');
                             $(a).find('.txtUrl').first().val(config.Hooks[i].URL || '');
 
                             $(a).find('.chkOnPlay').first().checked(config.Hooks[i].onPlay || false);
@@ -244,7 +266,6 @@
                                 '    "serverName": "{{ServerName}}",\n' +
                                 '    "userID": "{{UserID}}",\n' +
                                 '    "userName": "{{UserName}}",\n' +
-                                '    "appName": "{{AppName}}",\n' +
                                 '    "deviceID": "{{DeviceID}}",\n' +
                                 '    "deviceIP": "{{DeviceIP}}",\n' +
                                 '    "itemType": "{{ItemType}}",\n' +
@@ -263,7 +284,7 @@
                                 '    "itemBitrate": {{ItemBitrate}},\n' +
                                 '    "itemGenre": "{{ItemGenre}}",\n' +
                                 '    "sessionID": "{{SessionID}}",\n' +
-                                '    "sessionPlaybackPositionTicks": "{{SessionPlaybackPositionTicks}}",\n' +
+                                '    "sessionPlaybackPositionTicks": {{SessionPlaybackPositionTicks}},\n' +
                                 '    "timeStamp": "{{TimeStamp}}"\n' +
                                 '}');
                             

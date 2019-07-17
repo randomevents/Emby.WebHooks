@@ -22,7 +22,7 @@ namespace Emby.WebHooks.Configuration
         public class Hook
 
         {
-
+            public String Name { get; set; }
             public string URL { get; set; }
             public bool onPlay { get; set; }
             public bool onPause { get; set; }

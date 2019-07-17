@@ -220,7 +220,6 @@ namespace Emby.WebHooks
             Replace("{{UserID}}",  sessionInfo.UserId).
             Replace("{{UserName}}",  sessionInfo.UserName).
             
-            Replace("{{AppName}}",  sessionInfo.DeviceName).
             Replace("{{DeviceID}}",  sessionInfo.DeviceId).
             Replace("{{DeviceName}}",  sessionInfo.DeviceName).
             Replace("{{DeviceIP}}",  sessionInfo.RemoteEndPoint).
@@ -236,15 +235,15 @@ namespace Emby.WebHooks
             Replace("{{ItemNameParent}}", e.Parent.Name).
             Replace("{{ItemNameGrandparent}}", e.Parent.Parent.Name).
             Replace("{{ItemID}}", e.Id.ToString()).
-            Replace("{{ItemRunTimeTicks}}",  e.RunTimeTicks.ToString()).
-            Replace("{{ItemIndex}}",  e.IndexNumber.ToString()).
-            Replace("{{ItemParentIndex}}",  e.ParentIndexNumber.ToString()).
-            Replace("{{ItemCriticRating}}",  e.CriticRating.ToString()).
-            Replace("{{ItemCommunityRating}}",  e.CommunityRating.ToString()).
-            Replace("{{ItemPremiereDate}}",  e.PremiereDate.ToString()).
+            Replace("{{ItemRunTimeTicks}}",  e.RunTimeTicks.GetValueOrDefault().ToString()).
+            Replace("{{ItemIndex}}",  e.IndexNumber.GetValueOrDefault().ToString()).
+            Replace("{{ItemParentIndex}}",  e.ParentIndexNumber.GetValueOrDefault().ToString()).
+            Replace("{{ItemCriticRating}}",  e.CriticRating.GetValueOrDefault().ToString()).
+            Replace("{{ItemCommunityRating}}",  e.CommunityRating.GetValueOrDefault().ToString()).
+            Replace("{{ItemPremiereDate}}",  e.PremiereDate.GetValueOrDefault().ToString()).
             Replace("{{ItemDateAdded}}",  e.DateCreated.ToString()).
-            Replace("{{ItemYear}}",  e.ProductionYear.ToString()).
-            Replace("{{ItemBitrate}}",  e.TotalBitrate.ToString()).
+            Replace("{{ItemYear}}",  e.ProductionYear.GetValueOrDefault().ToString()).
+            Replace("{{ItemBitrate}}",  e.TotalBitrate.GetValueOrDefault().ToString()).
             Replace("{{ItemGenre}}",  string.Join(",", e.Genres));
         }
     }
