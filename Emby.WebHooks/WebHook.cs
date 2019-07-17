@@ -104,7 +104,7 @@ namespace Emby.WebHooks
 
                     foreach (var h in hooks)
                     {
-                        var l = SendHook(h, buildJson_Added(h, e.Item, "Added")).Result;
+                        SendHook(h, buildJson_Added(h, e.Item, "Added"));
                     }
                 }
             }
@@ -177,7 +177,7 @@ namespace Emby.WebHooks
                     string msgString = buildJson_Playback(h, _sessionManager.GetSession(e.DeviceId.ToString(), e.ClientName, ""), e, action);
                     if (msgString != "_redundant_")
                     {
-                        var l = SendHook(h, msgString).Result;
+                        SendHook(h, msgString);
                     }
                 }
             }
@@ -212,11 +212,11 @@ namespace Emby.WebHooks
         {
             string msgAdded = buildJson_BaseItem(hooks.removeQuotes, hooks.msgHook, e);
 
-            return msgAdded.Replace("{Event}", testString(hooks.removeQuotes, trigger, true)).
-            Replace("{ServerID}", testString(hooks.removeQuotes, _appHost.SystemId, true)).
-            Replace("{ServerName}", testString(hooks.removeQuotes, _appHost.FriendlyName, true)).
+            return msgAdded.Replace("{{Event}}", testString(hooks.removeQuotes, trigger, true)).
+            Replace("{{ServerID}}", testString(hooks.removeQuotes, _appHost.SystemId, true)).
+            Replace("{{ServerName}}", testString(hooks.removeQuotes, _appHost.FriendlyName, true)).
 
-            Replace("{TimeStamp}", testString(hooks.removeQuotes, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
+            Replace("{{TimeStamp}}", testString(hooks.removeQuotes, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
         }
 
         public string buildJson_Playback(PluginConfiguration.Hook hooks, SessionInfo sessionInfo, PlaybackProgressEventArgs playbackData, string trigger)
@@ -227,39 +227,39 @@ namespace Emby.WebHooks
 
             string msgPlayback = buildJson_BaseItem(hooks.removeQuotes, hooks.msgHook, sessionInfo.FullNowPlayingItem);
 
-            return msgPlayback.Replace("{Event}", testString(hooks.removeQuotes, trigger, true)).
-            Replace("{ServerID}", testString(hooks.removeQuotes, _appHost.SystemId, true)).
-            Replace("{ServerName}", testString(hooks.removeQuotes, _appHost.FriendlyName, true)).
+            return msgPlayback.Replace("{{Event}}", testString(hooks.removeQuotes, trigger, true)).
+            Replace("{{ServerID}}", testString(hooks.removeQuotes, _appHost.SystemId, true)).
+            Replace("{{ServerName}}", testString(hooks.removeQuotes, _appHost.FriendlyName, true)).
             
-            Replace("{UserID}", testString(hooks.removeQuotes, sessionInfo.UserId.ToString(), true)).
-            Replace("{UserName}", testString(hooks.removeQuotes, sessionInfo.UserName, true)).
+            Replace("{{UserID}}", testString(hooks.removeQuotes, sessionInfo.UserId.ToString(), true)).
+            Replace("{{UserName}}", testString(hooks.removeQuotes, sessionInfo.UserName, true)).
             
-            Replace("{AppName}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
-            Replace("{DeviceID}", testString(hooks.removeQuotes, sessionInfo.DeviceId.ToString(), true)).
-            Replace("{DeviceName}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
-            Replace("{DeviceIP}", testString(hooks.removeQuotes, sessionInfo.RemoteEndPoint.ToString(), true)).
+            Replace("{{AppName}}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
+            Replace("{{DeviceID}}", testString(hooks.removeQuotes, sessionInfo.DeviceId.ToString(), true)).
+            Replace("{{DeviceName}}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
+            Replace("{{DeviceIP}}", testString(hooks.removeQuotes, sessionInfo.RemoteEndPoint.ToString(), true)).
 
-            Replace("{SessionID}", testString(hooks.removeQuotes, sessionInfo.Id, true)).
-            Replace("{SessionPlaybackPositionTicks}", testString(hooks.removeQuotes, playbackTicks, false)).
-            Replace("{TimeStamp}", testString(hooks.removeQuotes, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
+            Replace("{{SessionID}}", testString(hooks.removeQuotes, sessionInfo.Id, true)).
+            Replace("{{SessionPlaybackPositionTicks}}", testString(hooks.removeQuotes, playbackTicks, false)).
+            Replace("{{TimeStamp}}", testString(hooks.removeQuotes, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), true));
         }
 
         public string buildJson_BaseItem(bool removeQuotes, string inStr, BaseItem e) {
-            return inStr.Replace("{ItemType}", testString(removeQuotes, e.GetType().Name, true)).
-            Replace("{ItemName}", testString(removeQuotes, e.Name, true)).
-            Replace("{ItemNameParent}", testString(removeQuotes, e.Parent.Name, true)).
-            Replace("{ItemNameGrandparent}", testString(removeQuotes, e.Parent.Parent.Name, true)).
-            Replace("{ItemID}", testString(removeQuotes, e.Id.ToString(), true)).
-            Replace("{ItemRunTimeTicks}", testString(removeQuotes, e.RunTimeTicks.ToString(), false)).
-            Replace("{ItemIndex}", testString(removeQuotes, e.IndexNumber.ToString(), false)).
-            Replace("{ItemParentIndex}", testString(removeQuotes, e.ParentIndexNumber.ToString(), false)).
-            Replace("{ItemCriticRating}", testString(removeQuotes, e.CriticRating.ToString(), false)).
-            Replace("{ItemCommunityRating}", testString(removeQuotes, e.CommunityRating.ToString(), false)).
-            Replace("{ItemPremiereDate}", testString(removeQuotes, e.PremiereDate.ToString(), true)).
-            Replace("{ItemDateAdded}", testString(removeQuotes, e.DateCreated.ToString(), true)).
-            Replace("{ItemYear}", testString(removeQuotes, e.ProductionYear.ToString(), false)).
-            Replace("{ItemBitrate}", testString(removeQuotes, e.TotalBitrate.ToString(), false)).
-            Replace("{ItemGenre}", testString(removeQuotes, string.Join(",", e.Genres), true));
+            return inStr.Replace("{{ItemType}}", testString(removeQuotes, e.GetType().Name, true)).
+            Replace("{{ItemName}}", testString(removeQuotes, e.Name, true)).
+            Replace("{{ItemNameParent}}", testString(removeQuotes, e.Parent.Name, true)).
+            Replace("{{ItemNameGrandparent}}", testString(removeQuotes, e.Parent.Parent.Name, true)).
+            Replace("{{ItemID}}", testString(removeQuotes, e.Id.ToString(), true)).
+            Replace("{{ItemRunTimeTicks}}", testString(removeQuotes, e.RunTimeTicks.ToString(), false)).
+            Replace("{{ItemIndex}}", testString(removeQuotes, e.IndexNumber.ToString(), false)).
+            Replace("{{ItemParentIndex}}", testString(removeQuotes, e.ParentIndexNumber.ToString(), false)).
+            Replace("{{ItemCriticRating}}", testString(removeQuotes, e.CriticRating.ToString(), false)).
+            Replace("{{ItemCommunityRating}}", testString(removeQuotes, e.CommunityRating.ToString(), false)).
+            Replace("{{ItemPremiereDate}}", testString(removeQuotes, e.PremiereDate.ToString(), true)).
+            Replace("{{ItemDateAdded}}", testString(removeQuotes, e.DateCreated.ToString(), true)).
+            Replace("{{ItemYear}}", testString(removeQuotes, e.ProductionYear.ToString(), false)).
+            Replace("{{ItemBitrate}}", testString(removeQuotes, e.TotalBitrate.ToString(), false)).
+            Replace("{{ItemGenre}}", testString(removeQuotes, string.Join(",", e.Genres), true));
         }
 
         public string testString(bool removeQuotes, string inStr, bool isString)

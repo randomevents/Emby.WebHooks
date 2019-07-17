@@ -67,10 +67,10 @@
                             <textarea is="emby-textarea" type="text" class="emby-textarea txtPlayback" rows="7"  label="Message"></textarea>
                         </div>
                         <div class="fieldDescription">
-                            Playback Tokens -: {Event}, {ServerID}, {ServerName}, {UserID}, {UserName}, {AppName}, {DeviceID}, {DeviceName}, {DeviceIP}, {ItemType}, {ItemName}, {ItemNameParent}, {ItemNameGrandparent}, {ItemID}, {ItemRunTimeTicks}, {ItemIndex}, {ItemParentIndex}, {ItemCriticRating}, {ItemCommunityRating}, {ItemPremiereDate}, {ItemDateAdded}, {ItemYear}, {ItemBitrate}, {ItemGenre}, {SessionID}, {SessionPlaybackPositionTicks}, {TimeStamp}
+                            Playback Tokens -: {{Event}}, {{ServerID}}, {{ServerName}}, {{UserID}}, {{UserName}}, {{AppName}}, {{DeviceID}}, {{DeviceName}}, {{DeviceIP}}, {{ItemType}}, {{ItemName}}, {{ItemNameParent}}, {{ItemNameGrandparent}}, {{ItemID}}, {{ItemRunTimeTicks}}, {{ItemIndex}}, {{ItemParentIndex}}, {{ItemCriticRating}}, {{ItemCommunityRating}}, {{ItemPremiereDate}}, {{ItemDateAdded}}, {{ItemYear}}, {{ItemBitrate}}, {{ItemGenre}}, {{SessionID}}, {{SessionPlaybackPositionTicks}}, {{TimeStamp}}
                         </div>
                         <div class="fieldDescription">
-                            Item Added Tokens -: {Event}, {ServerID}, {ServerName}, {ItemType}, {ItemName}, {ItemNameParent}, {ItemNameGrandparent}, {ItemID}, {ItemRunTimeTicks}, {ItemIndex}, {ItemParentIndex}, {ItemCriticRating}, {ItemCommunityRating}, {ItemPremiereDate}, {ItemDateAdded}, {ItemYear}, {ItemBitrate}, {ItemGenre}, {TimeStamp}
+                            Item Added Tokens -: {{Event}}, {{ServerID}}, {{ServerName}}, {{ItemType}}, {{ItemName}}, {{ItemNameParent}}, {{ItemNameGrandparent}}, {{ItemID}}, {{ItemRunTimeTicks}}, {{ItemIndex}}, {{ItemParentIndex}}, {{ItemCriticRating}}, {{ItemCommunityRating}}, {{ItemPremiereDate}}, {{ItemDateAdded}}, {{ItemYear}}, {{ItemBitrate}}, {{ItemGenre}}, {{TimeStamp}}
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                             $(a).find('.chkOnItemAdded').first().checked(config.Hooks[i].onItemAdded || false);
                             $(a).find('.chkRemoveQuotes').first().checked(config.Hooks[i].removeQuotes || false);
 
-                            $(a).find('.txtPlayback').first().val(config.Hooks[i].msgHook || '{"event": {Event}, "user":{UserName}, "item":{ItemName}, "date":{TimeStamp}}');
+                            $(a).find('.txtPlayback').first().val(config.Hooks[i].msgHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
                         }
                     });
 
