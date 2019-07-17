@@ -48,6 +48,41 @@
                                 <input is="emby-checkbox" type="checkbox" class="chkOnResume" />
                                 <span>Resume</span>
                             </label>
+                            <div class="inputContainer">
+                                <textarea is="emby-textarea" type="text" class="emby-textarea txtPlayback" rows="7" label="Message"></textarea>
+                            </div>
+                            <div class="fieldDescription">
+                                Available Keywords:
+                                <ul style="columns: 3;">
+                                    <li>{{Event}}</li>
+                                    <li>{{ServerID}}</li>
+                                    <li>{{ServerName}}</li>
+                                    <li>{{UserID}}</li>
+                                    <li>{{UserName}}</li>
+                                    <li>{{AppName}}</li>
+                                    <li>{{DeviceID}}</li>
+                                    <li>{{DeviceName}}</li>
+                                    <li>{{DeviceIP}}</li>
+                                    <li>{{ItemType}}</li>
+                                    <li>{{ItemName}}</li>
+                                    <li>{{ItemNameParent}}</li>
+                                    <li>{{ItemNameGrandparent}}</li>
+                                    <li>{{ItemID}}</li>
+                                    <li>{{ItemRunTimeTicks}}</li>
+                                    <li>{{ItemIndex}}</li>
+                                    <li>{{ItemParentIndex}}</li>
+                                    <li>{{ItemCriticRating}}</li>
+                                    <li>{{ItemCommunityRating}}</li>
+                                    <li>{{ItemPremiereDate}}</li>
+                                    <li>{{ItemDateAdded}}</li>
+                                    <li>{{ItemYear}}</li>
+                                    <li>{{ItemBitrate}}</li>
+                                    <li>{{ItemGenre}}</li>
+                                    <li>{{SessionID}}</li>
+                                    <li>{{SessionPlaybackPositionTicks}}</li>
+                                    <li>{{TimeStamp}}</li>
+                                </ul>
+                            </div>
                         </div>
                         <h3>Server Events</h3>
                         <div style="display:flex">
@@ -57,13 +92,31 @@
                             </label>
                         </div>
                         <div class="inputContainer">
-                            <textarea is="emby-textarea" type="text" class="emby-textarea txtPlayback" rows="7"  label="Message"></textarea>
+                            <textarea is="emby-textarea" type="text" class="emby-textarea txtServer" rows="7" label="Message"></textarea>
                         </div>
                         <div class="fieldDescription">
-                            Playback Tokens -: {{Event}}, {{ServerID}}, {{ServerName}}, {{UserID}}, {{UserName}}, {{AppName}}, {{DeviceID}}, {{DeviceName}}, {{DeviceIP}}, {{ItemType}}, {{ItemName}}, {{ItemNameParent}}, {{ItemNameGrandparent}}, {{ItemID}}, {{ItemRunTimeTicks}}, {{ItemIndex}}, {{ItemParentIndex}}, {{ItemCriticRating}}, {{ItemCommunityRating}}, {{ItemPremiereDate}}, {{ItemDateAdded}}, {{ItemYear}}, {{ItemBitrate}}, {{ItemGenre}}, {{SessionID}}, {{SessionPlaybackPositionTicks}}, {{TimeStamp}}
-                        </div>
-                        <div class="fieldDescription">
-                            Item Added Tokens -: {{Event}}, {{ServerID}}, {{ServerName}}, {{ItemType}}, {{ItemName}}, {{ItemNameParent}}, {{ItemNameGrandparent}}, {{ItemID}}, {{ItemRunTimeTicks}}, {{ItemIndex}}, {{ItemParentIndex}}, {{ItemCriticRating}}, {{ItemCommunityRating}}, {{ItemPremiereDate}}, {{ItemDateAdded}}, {{ItemYear}}, {{ItemBitrate}}, {{ItemGenre}}, {{TimeStamp}}
+                            Available Keywords:
+                            <ul style="columns: 3;">
+                                <li>{{Event}}</li>
+                                <li>{{ServerID}}</li>
+                                <li>{{ServerName}}</li>
+                                <li>{{ItemType}}</li>
+                                <li>{{ItemName}}</li>
+                                <li>{{ItemNameParent}}</li>
+                                <li>{{ItemNameGrandparent}}</li>
+                                <li>{{ItemID}}</li>
+                                <li>{{ItemRunTimeTicks}}</li>
+                                <li>{{ItemIndex}}</li>
+                                <li>{{ItemParentIndex}}</li>
+                                <li>{{ItemCriticRating}}</li>
+                                <li>{{ItemCommunityRating}}</li>
+                                <li>{{ItemPremiereDate}}</li>
+                                <li>{{ItemDateAdded}}</li>
+                                <li>{{ItemYear}}</li>
+                                <li>{{ItemBitrate}}</li>
+                                <li>{{ItemGenre}}</li>
+                                <li>{{TimeStamp}}</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -147,9 +200,9 @@
                                     withEpisodes: $(this).find('.chkEpisodes').first().checked(),
                                     withSongs: $(this).find('.chkSongs').first().checked(),
                                     onItemAdded: $(this).find('.chkOnItemAdded').first().checked(),
-                                    removeQuotes: $(this).find('.chkRemoveQuotes').first().checked(),
 
-                                    msgHook: $(this).find('.txtPlayback').first().val(),
+                                    msgPlaybackEventHook: $(this).find('.txtPlayback').first().val(),
+                                    msgServerEventHook: $(this).find('.txtPlayback').first().val(),
                                 }
                             );
                         });
@@ -185,15 +238,14 @@
                             $(a).find('.chkSongs').first().checked(config.Hooks[i].withSongs || false);
                             $(a).find('.chkOnItemAdded').first().checked(config.Hooks[i].onItemAdded || false);
 
-                            $(a).find('.txtPlayback').first().val(config.Hooks[i].msgHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
+                            $(a).find('.txtPlayback').first().val(config.Hooks[i].msgPlaybackEventHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
+                            $(a).find('.txtServer').first().val(config.Hooks[i].msgServerEventHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
                         }
                     });
 
                     Dashboard.hideLoadingMsg();
                 });
-
             })();
-
         </script>
     </div>
 </body>

@@ -34,7 +34,8 @@ namespace Emby.WebHooks.Configuration
             public bool withEpisodes { get; set; }
             public bool withSongs { get; set; }
 
-            public string msgHook { get; set; }
+            public string msgPlaybackEventHook { get; set; }
+            public string msgServerEventHook { get; set; }
 
         }
 
