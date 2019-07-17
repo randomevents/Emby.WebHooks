@@ -33,7 +33,7 @@ namespace Emby.WebHooks
 
         public static Plugin Instance { get; private set; }
 
-        private Guid _id = new Guid("c9ebd609-6664-46fb-8f97-eabcd0b4fde6");
+        private Guid _id = new Guid("426eb1da-a1de-4ae2-bb79-cb7acb302997");
         public override Guid Id
         {
             get { return _id; }

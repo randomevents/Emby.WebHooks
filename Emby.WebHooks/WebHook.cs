@@ -3,20 +3,18 @@ using MediaBrowser.Controller;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Plugins;
 using MediaBrowser.Controller.Session;
-using MediaBrowser.Controller.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Emby.WebHooks.Configuration;
-using System.IO;
 using MediaBrowser.Model.Logging;
-using MediaBrowser.Model.System;
 using MediaBrowser.Common.Net;
-using MediaBrowser.Controller.Notifications;
-using System.Threading;
 using MediaBrowser.Controller.Entities;
+using MediaBrowser.Controller.Entities.Audio;
+using MediaBrowser.Controller.Entities.Movies;
+using MediaBrowser.Controller.Entities.TV;
+using MediaBrowser.Model.Entities;
 
 namespace Emby.WebHooks
 {
@@ -25,7 +23,6 @@ namespace Emby.WebHooks
     {
         private readonly ISessionManager _sessionManager;
         private readonly IUserManager _userManager;
-        private readonly ISyncManager _syncManager;
         private readonly ILogger _logger;
         private readonly ILibraryManager _libraryManager;
         private readonly IHttpClient _httpClient;
@@ -57,13 +54,13 @@ namespace Emby.WebHooks
             get { return "WebHooks"; }
         }
 
-        public WebHooks(ISessionManager sessionManager, IHttpClient httpClient, ILogManager logManager, IUserManager userManager, ILibraryManager libraryManager, INetworkManager networkManager, IServerApplicationHost appHost, ISyncManager syncManager)
+        public WebHooks(ISessionManager sessionManager, IHttpClient httpClient, ILogger  logger, IUserManager userManager, ILibraryManager libraryManager, INetworkManager networkManager, IServerApplicationHost appHost, ILibraryMonitor libra
+        )
         {
-            _logger = logManager.GetLogger(Plugin.Instance.Name);
+            _logger = logger;
             _libraryManager = libraryManager; //ItemRemoved
             _sessionManager = sessionManager; //AuthenticationFailed SessionStarted SessionEnded SessionActivity AuthenticationSucceeded
             _userManager = userManager; //UserLockedOut
-            _syncManager = syncManager; //SyncJobItemCreated SyncJobCreated SyncJobCancelled SyncJobItemCancelled
             _httpClient = httpClient;
             _networkManager = networkManager;
             _appHost = appHost;
@@ -95,10 +92,10 @@ namespace Emby.WebHooks
             //Only concerned with video and audio files
             if (
                 e.Item.IsVirtualItem == false &&
-                (e.Item.MediaType == "Video" || e.Item.MediaType == "Audio")
+                (e.Item.MediaType == MediaType.Video || e.Item.MediaType == MediaType.Audio)
                 )
             {
-                var iType = _libraryManager.GetContentType(e.Item);
+                var iType = e.Item.GetType();
                 var hooks = hooksByType(iType).Where(h => h.onItemAdded);
 
                 if (hooks.Count() > 0)
@@ -107,14 +104,14 @@ namespace Emby.WebHooks
 
                     foreach (var h in hooks)
                     {
-                        SendHook(h, buildJson_Added(h, e.Item, "Added"));
+                        var l = SendHook(h, buildJson_Added(h, e.Item, "Added")).Result;
                     }
                 }
             }
         }
         private void PlaybackProgress(object sender, PlaybackProgressEventArgs e)
         {
-            var iType = _libraryManager.GetContentType(e.Item);
+            var iType = e.Item.GetType();
 
             if (e.IsPaused && getDeviceState(e.DeviceId).lastState != "Paused" && getDeviceState(e.DeviceId).lastState != "Stopped")
             {
@@ -131,7 +128,7 @@ namespace Emby.WebHooks
         {
             string action = "Paused";          
 
-            var iType = _libraryManager.GetContentType(e.Item);
+            var iType = e.Item.GetType();
             var hooks = hooksByType(iType).Where(i => i.onPause);
 
             PlaybackMessage(hooks, e, action);
@@ -141,7 +138,7 @@ namespace Emby.WebHooks
         {
             string action = "Resumed";
 
-            var iType = _libraryManager.GetContentType(e.Item);
+            var iType = e.Item.GetType();
             var hooks = hooksByType(iType).Where(i => i.onResume);
 
             PlaybackMessage(hooks, e, action);
@@ -151,7 +148,7 @@ namespace Emby.WebHooks
         {
             string action = "Playing";
 
-            var iType = _libraryManager.GetContentType(e.Item);
+            var iType = e.Item.GetType();
             var hooks = hooksByType(iType).Where(i => i.onPlay);
 
             PlaybackMessage(hooks, e, action);
@@ -161,7 +158,7 @@ namespace Emby.WebHooks
         {
             string action = "Stopped";
 
-            var iType = _libraryManager.GetContentType(e.Item);
+            var iType = e.Item.GetType();
             var hooks = hooksByType(iType).Where(i => i.onStop);
 
             PlaybackMessage(hooks, e, action);
@@ -180,32 +177,33 @@ namespace Emby.WebHooks
                     string msgString = buildJson_Playback(h, _sessionManager.GetSession(e.DeviceId.ToString(), e.ClientName, ""), e, action);
                     if (msgString != "_redundant_")
                     {
-                        SendHook(h, msgString);
+                        var l = SendHook(h, msgString).Result;
                     }
                 }
             }
         }
 
-        public IEnumerable<PluginConfiguration.Hook> hooksByType(string type)
+        public IEnumerable<PluginConfiguration.Hook> hooksByType(Type type)
         {
+            _logger.Debug("Checking hook with {0}", type.Name);
             return Plugin.Instance.Configuration.Hooks.Where(h =>
-                    (h.withMovies && type == "movies") ||
-                    (h.withEpisodes && type == "tvshows") ||
-                    (h.withSongs && type == "music")
+                    (h.withMovies && type == typeof(Movie)) ||
+                    (h.withEpisodes && type == typeof(Episode)) ||
+                    (h.withSongs && type == typeof(Audio))
             );
         }
 
         public async Task<bool> SendHook(PluginConfiguration.Hook h, string jsonString)
         {
             _logger.Debug("WebHook sent to {0}", h.URL);
-            _logger.Debug(jsonString);
+            _logger.Debug("{0}", jsonString);
 
             using (var client = new HttpClient())
             {
                     var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
                     var response = await client.PostAsync(h.URL, httpContent);
                     var responseString = await response.Content.ReadAsStringAsync();
-                    _logger.Debug(response.StatusCode.ToString());
+                    _logger.Debug("{0}", response.StatusCode.ToString());
             }
             return true;
         }
@@ -236,7 +234,7 @@ namespace Emby.WebHooks
             Replace("{UserID}", testString(hooks.removeQuotes, sessionInfo.UserId.ToString(), true)).
             Replace("{UserName}", testString(hooks.removeQuotes, sessionInfo.UserName, true)).
             
-            Replace("{AppName}", testString(hooks.removeQuotes, sessionInfo.AppName, true)).
+            Replace("{AppName}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
             Replace("{DeviceID}", testString(hooks.removeQuotes, sessionInfo.DeviceId.ToString(), true)).
             Replace("{DeviceName}", testString(hooks.removeQuotes, sessionInfo.DeviceName, true)).
             Replace("{DeviceIP}", testString(hooks.removeQuotes, sessionInfo.RemoteEndPoint.ToString(), true)).
@@ -247,7 +245,7 @@ namespace Emby.WebHooks
         }
 
         public string buildJson_BaseItem(bool removeQuotes, string inStr, BaseItem e) {
-            return inStr.Replace("{ItemType}", testString(removeQuotes, _libraryManager.GetContentType(e), true)).
+            return inStr.Replace("{ItemType}", testString(removeQuotes, e.GetType().Name, true)).
             Replace("{ItemName}", testString(removeQuotes, e.Name, true)).
             Replace("{ItemNameParent}", testString(removeQuotes, e.Parent.Name, true)).
             Replace("{ItemNameGrandparent}", testString(removeQuotes, e.Parent.Parent.Name, true)).

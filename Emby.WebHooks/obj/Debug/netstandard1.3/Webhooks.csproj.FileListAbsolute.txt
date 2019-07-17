@@ -15,3 +15,11 @@ C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\nets
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfo.cs
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Emby.WebHooks.dll
 C:\Files - Programming\Projects\Repos\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Emby.WebHooks.pdb
+E:\dev\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfoInputs.cache
+E:\dev\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.AssemblyInfo.cs
+E:\dev\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Emby.WebHooks.dll
+E:\dev\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Emby.WebHooks.pdb
+E:\dev\Emby.WebHooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.deps.json
+E:\dev\Emby.WebHooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.dll
+E:\dev\Emby.WebHooks\Emby.Webhooks\bin\Debug\netstandard1.3\Emby.WebHooks.pdb
+E:\dev\Emby.WebHooks\Emby.Webhooks\obj\Debug\netstandard1.3\Webhooks.csproj.CoreCompileInputs.cache
