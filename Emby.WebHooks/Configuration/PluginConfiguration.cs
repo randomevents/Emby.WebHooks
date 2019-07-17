@@ -33,7 +33,6 @@ namespace Emby.WebHooks.Configuration
             public bool withMovies { get; set; }
             public bool withEpisodes { get; set; }
             public bool withSongs { get; set; }
-            public bool removeQuotes { get; set; }
 
             public string msgHook { get; set; }
 

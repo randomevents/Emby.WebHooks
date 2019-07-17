@@ -56,13 +56,6 @@
                                 <span>Item Added</span>
                             </label>
                         </div>
-                        <h3>Token Options</h3>
-                        <div style="display:flex">
-                            <label class="checkboxContainer" style="float:left; width:auto; padding-right:10px">
-                                <input is="emby-checkbox" type="checkbox" class="chkRemoveQuotes" />
-                                <span>Remove quotes from text tokens (ex. {Events}="Playing" becomes {Events}=Playing), usually for crafting statements</span>
-                            </label>
-                        </div>
                         <div class="inputContainer">
                             <textarea is="emby-textarea" type="text" class="emby-textarea txtPlayback" rows="7"  label="Message"></textarea>
                         </div>
@@ -191,7 +184,6 @@
                             $(a).find('.chkEpisodes').first().checked(config.Hooks[i].withEpisodes || false);
                             $(a).find('.chkSongs').first().checked(config.Hooks[i].withSongs || false);
                             $(a).find('.chkOnItemAdded').first().checked(config.Hooks[i].onItemAdded || false);
-                            $(a).find('.chkRemoveQuotes').first().checked(config.Hooks[i].removeQuotes || false);
 
                             $(a).find('.txtPlayback').first().val(config.Hooks[i].msgHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
                         }
