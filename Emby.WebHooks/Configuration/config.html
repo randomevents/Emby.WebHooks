@@ -54,33 +54,33 @@
                             <div class="fieldDescription">
                                 Available Keywords:
                                 <ul style="columns: 3;">
-                                    <li>{{Event}}</li>
-                                    <li>{{ServerID}}</li>
-                                    <li>{{ServerName}}</li>
-                                    <li>{{UserID}}</li>
-                                    <li>{{UserName}}</li>
-                                    <li>{{AppName}}</li>
-                                    <li>{{DeviceID}}</li>
-                                    <li>{{DeviceName}}</li>
-                                    <li>{{DeviceIP}}</li>
-                                    <li>{{ItemType}}</li>
-                                    <li>{{ItemName}}</li>
-                                    <li>{{ItemNameParent}}</li>
-                                    <li>{{ItemNameGrandparent}}</li>
-                                    <li>{{ItemID}}</li>
-                                    <li>{{ItemRunTimeTicks}}</li>
-                                    <li>{{ItemIndex}}</li>
-                                    <li>{{ItemParentIndex}}</li>
-                                    <li>{{ItemCriticRating}}</li>
-                                    <li>{{ItemCommunityRating}}</li>
-                                    <li>{{ItemPremiereDate}}</li>
-                                    <li>{{ItemDateAdded}}</li>
-                                    <li>{{ItemYear}}</li>
-                                    <li>{{ItemBitrate}}</li>
-                                    <li>{{ItemGenre}}</li>
-                                    <li>{{SessionID}}</li>
-                                    <li>{{SessionPlaybackPositionTicks}}</li>
-                                    <li>{{TimeStamp}}</li>
+                                    <li>{{Event}} (string)</li>
+                                    <li>{{ServerID}} (string)</li>
+                                    <li>{{ServerName}} (string)</li>
+                                    <li>{{UserID}} (string)</li>
+                                    <li>{{UserName}} (string)</li>
+                                    <li>{{AppName}} (string)</li>
+                                    <li>{{DeviceID}} (string)</li>
+                                    <li>{{DeviceName}} (string)</li>
+                                    <li>{{DeviceIP}} (string)</li>
+                                    <li>{{ItemType}} (string)</li>
+                                    <li>{{ItemName}} (string)</li>
+                                    <li>{{ItemNameParent}} (string)</li>
+                                    <li>{{ItemNameGrandparent}} (string)</li>
+                                    <li>{{ItemID}} (string)</li>
+                                    <li>{{ItemRunTimeTicks}} (int)</li>
+                                    <li>{{ItemIndex}} (int)</li>
+                                    <li>{{ItemParentIndex}} (int)</li>
+                                    <li>{{ItemCriticRating}} (float)</li>
+                                    <li>{{ItemCommunityRating}} (float)</li>
+                                    <li>{{ItemPremiereDate}} (string)</li>
+                                    <li>{{ItemDateAdded}} (string)</li>
+                                    <li>{{ItemYear}} (int)</li>
+                                    <li>{{ItemBitrate}} (int)</li>
+                                    <li>{{ItemGenre}} (string)</li>
+                                    <li>{{SessionID}} (string)</li>
+                                    <li>{{SessionPlaybackPositionTicks}} (double)</li>
+                                    <li>{{TimeStamp}} (string/yyyy-MM-dd HH:mm:ss.fff)</li>
                                 </ul>
                             </div>
                         </div>
@@ -97,25 +97,25 @@
                         <div class="fieldDescription">
                             Available Keywords:
                             <ul style="columns: 3;">
-                                <li>{{Event}}</li>
-                                <li>{{ServerID}}</li>
-                                <li>{{ServerName}}</li>
-                                <li>{{ItemType}}</li>
-                                <li>{{ItemName}}</li>
-                                <li>{{ItemNameParent}}</li>
-                                <li>{{ItemNameGrandparent}}</li>
-                                <li>{{ItemID}}</li>
-                                <li>{{ItemRunTimeTicks}}</li>
-                                <li>{{ItemIndex}}</li>
-                                <li>{{ItemParentIndex}}</li>
-                                <li>{{ItemCriticRating}}</li>
-                                <li>{{ItemCommunityRating}}</li>
-                                <li>{{ItemPremiereDate}}</li>
-                                <li>{{ItemDateAdded}}</li>
-                                <li>{{ItemYear}}</li>
-                                <li>{{ItemBitrate}}</li>
-                                <li>{{ItemGenre}}</li>
-                                <li>{{TimeStamp}}</li>
+                                <li>{{Event}} (string)</li>
+                                <li>{{ServerID}} (string)</li>
+                                <li>{{ServerName}} (string)</li>
+                                <li>{{ItemType}}  (string)</li>
+                                <li>{{ItemName}}  (string)</li>
+                                <li>{{ItemNameParent}}  (string)</li>
+                                <li>{{ItemNameGrandparent}}  (string)</li>
+                                <li>{{ItemID}}  (string)</li>
+                                <li>{{ItemRunTimeTicks}}  (int)</li>
+                                <li>{{ItemIndex}}  (int)</li>
+                                <li>{{ItemParentIndex}}  (int)</li>
+                                <li>{{ItemCriticRating}}  (float)</li>
+                                <li>{{ItemCommunityRating}}  (float)</li>
+                                <li>{{ItemPremiereDate}}  (string)</li>
+                                <li>{{ItemDateAdded}}  (string)</li>
+                                <li>{{ItemYear}}  (int)</li>
+                                <li>{{ItemBitrate}}  (int)</li>
+                                <li>{{ItemGenre}}  (string)</li>
+                                <li>{{TimeStamp}} (string/yyyy-MM-dd HH:mm:ss.fff)</li>
                             </ul>
                         </div>
                     </div>
@@ -238,8 +238,56 @@
                             $(a).find('.chkSongs').first().checked(config.Hooks[i].withSongs || false);
                             $(a).find('.chkOnItemAdded').first().checked(config.Hooks[i].onItemAdded || false);
 
-                            $(a).find('.txtPlayback').first().val(config.Hooks[i].msgPlaybackEventHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
-                            $(a).find('.txtServer').first().val(config.Hooks[i].msgServerEventHook || '{"event": "{{Event}}", "user": "{{UserName}}", "item": "{{ItemName}}", "date": "{{TimeStamp}}"}');
+                            $(a).find('.txtPlayback').first().val(config.Hooks[i].msgPlaybackEventHook || '{\n' +
+                                '    "event": "{{Event}}",\n' +
+                                '    "serverId": "{{ServerID}}",\n' +
+                                '    "serverName": "{{ServerName}}",\n' +
+                                '    "userID": "{{UserID}}",\n' +
+                                '    "userName": "{{UserName}}",\n' +
+                                '    "appName": "{{AppName}}",\n' +
+                                '    "deviceID": "{{DeviceID}}",\n' +
+                                '    "deviceIP": "{{DeviceIP}}",\n' +
+                                '    "itemType": "{{ItemType}}",\n' +
+                                '    "itemName": "{{ItemName}}",\n' +
+                                '    "itemNameParent": "{{ItemNameParent}}",\n' +
+                                '    "itemNameGrandparent": "{{ItemNameGrandparent}}",\n' +
+                                '    "itemID": "{{ItemID}}",\n' +
+                                '    "itemRunTimeTicks": {{ItemRunTimeTicks}},\n' +
+                                '    "itemIndex": {{ItemIndex}},\n' +
+                                '    "itemParentIndex": {{ItemParentIndex}},\n' +
+                                '    "itemCriticRating": {{ItemCriticRating}},\n' +
+                                '    "itemCommunityRating": {{ItemCommunityRating}},\n' +
+                                '    "itemPremiereDate": "{{ItemPremiereDate}}",\n' +
+                                '    "itemDateAdded": "{{ItemDateAdded}}",\n' +
+                                '    "itemYear": {{ItemYear}},\n' +
+                                '    "itemBitrate": {{ItemBitrate}},\n' +
+                                '    "itemGenre": "{{ItemGenre}}",\n' +
+                                '    "sessionID": "{{SessionID}}",\n' +
+                                '    "sessionPlaybackPositionTicks": "{{SessionPlaybackPositionTicks}}",\n' +
+                                '    "timeStamp": "{{TimeStamp}}"\n' +
+                                '}');
+                            
+                            $(a).find('.txtServer').first().val(config.Hooks[i].msgServerEventHook || '{\n' +
+                                '    "event": "{{Event}}",\n' +
+                                '    "serverId": "{{ServerID}}",\n' +
+                                '    "serverName": "{{ServerName}}",\n' +
+                                '    "itemType": "{{ItemType}}",\n' +
+                                '    "itemName": "{{ItemName}}",\n' +
+                                '    "itemNameParent": "{{ItemNameParent}}",\n' +
+                                '    "itemNameGrandparent": "{{ItemNameGrandparent}}",\n' +
+                                '    "itemID": "{{ItemID}}",\n' +
+                                '    "itemRunTimeTicks": {{ItemRunTimeTicks}},\n' +
+                                '    "itemIndex": {{ItemIndex}},\n' +
+                                '    "itemParentIndex": {{ItemParentIndex}},\n' +
+                                '    "itemCriticRating": {{ItemCriticRating}},\n' +
+                                '    "itemCommunityRating": {{ItemCommunityRating}},\n' +
+                                '    "itemPremiereDate": "{{ItemPremiereDate}}",\n' +
+                                '    "itemDateAdded": "{{ItemDateAdded}}",\n' +
+                                '    "itemYear": {{ItemYear}},\n' +
+                                '    "itemBitrate": {{ItemBitrate}},\n' +
+                                '    "itemGenre": "{{ItemGenre}}",\n' +
+                                '    "timeStamp": "{{TimeStamp}}"\n' +
+                                '}');
                         }
                     });
 
