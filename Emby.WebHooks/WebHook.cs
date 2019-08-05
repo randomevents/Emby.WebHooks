@@ -34,7 +34,7 @@ namespace Emby.WebHooks
 
         public DeviceState getDeviceState(string deviceId)
         {
-            var c = deviceState.Where(x => x.deviceId == deviceId).FirstOrDefault();
+            var c = deviceState.FirstOrDefault(x => x.deviceId == deviceId);
             if (c == null)
             {
                 c = new DeviceState { deviceId = deviceId };
@@ -45,10 +45,7 @@ namespace Emby.WebHooks
 
         public static WebHooks Instance { get; private set; }
 
-        public string Name
-        {
-            get { return "WebHooks"; }
-        }
+        public string Name => "WebHooks";
 
         public WebHooks(ISessionManager sessionManager, ILogger  logger, ILibraryManager libraryManager, IServerApplicationHost appHost)
         {

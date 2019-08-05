@@ -170,13 +170,13 @@
                     });
 
                     $(page).on("click", '[data-action="expandCollapse"]', function toggleContent() {
-                        $(this).find('i').toggleClass('emby-collapse-expandIconExpanded');
-                        if ($(this).text === 'Expand')
-                            $(this).text('Collapse');
+                        var $this = $(this);
+                        if ($this.text() === 'Expand')
+                            $this.text('Collapse');
                         else
-                            $(this).text('Expand');
-                        
-                        $(this).closest('.singleHook').find('.content').toggle(800);
+                            $this.text('Expand');
+
+                        $this.closest('.singleHook').find('.content').toggle(800);
                     });
                     
 
