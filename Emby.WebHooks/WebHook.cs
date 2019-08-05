@@ -95,7 +95,7 @@ namespace Emby.WebHooks
 
                 foreach (var hook in hooks)
                 {
-                    SendHook(hook, ReplaceAddedEventKeywords(hook, e.Item, "Added"));
+                    SendHook(hook, ReplaceAddedEventKeywords(hook, e.Item));
                 }
             }
         }
@@ -194,15 +194,9 @@ namespace Emby.WebHooks
             }
         }
 
-        private string ReplaceAddedEventKeywords(PluginConfiguration.Hook hooks, BaseItem e, string trigger)
+        private string ReplaceAddedEventKeywords(PluginConfiguration.Hook hooks, BaseItem e)
         {
-            string msgAdded = ReplaceBaseKeywords(hooks.msgServerEventHook, e);
-
-            return msgAdded.
-                Replace("{{Event}}",  trigger).
-                Replace("{{ServerID}}",  _appHost.SystemId).
-                Replace("{{ServerName}}",  _appHost.FriendlyName).
-                Replace("{{TimeStamp}}",  DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            return ReplaceBaseKeywords(hooks.msgServerEventHook, e, "Added");
         }
 
         private string ReplacePlaybackEventKeywords(PluginConfiguration.Hook hooks, SessionInfo sessionInfo, PlaybackProgressEventArgs playbackData, string trigger)
@@ -211,39 +205,33 @@ namespace Emby.WebHooks
 
             string playbackTicks = (string.IsNullOrEmpty(playbackData.PlaybackPositionTicks.ToString())) ? sessionInfo.PlayState.PositionTicks.ToString() : playbackData.PlaybackPositionTicks.ToString();
 
-            string msgPlayback = ReplaceBaseKeywords(hooks.msgPlaybackEventHook, sessionInfo.FullNowPlayingItem);
+            string msgPlayback = ReplaceBaseKeywords(hooks.msgPlaybackEventHook, sessionInfo.FullNowPlayingItem, trigger);
 
-            return msgPlayback.Replace("{{Event}}",  trigger).
-            Replace("{{ServerID}}",  _appHost.SystemId).
-            Replace("{{ServerName}}",  _appHost.FriendlyName).
-            
-            Replace("{{UserID}}",  sessionInfo.UserId).
-            Replace("{{UserName}}",  sessionInfo.UserName).
-            
-            Replace("{{DeviceID}}",  sessionInfo.DeviceId).
-            Replace("{{DeviceName}}",  sessionInfo.DeviceName).
-            Replace("{{DeviceIP}}",  sessionInfo.RemoteEndPoint).
-
-            Replace("{{SessionID}}",  sessionInfo.Id).
-            Replace("{{SessionPlaybackPositionTicks}}",  playbackTicks).
-            Replace("{{TimeStamp}}",  DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            return msgPlayback
+                .Replace("{{UserID}}", sessionInfo.UserId)
+                .Replace("{{UserName}}", sessionInfo.UserName)
+                .Replace("{{DeviceID}}", sessionInfo.DeviceId)
+                .Replace("{{SessionPlaybackPositionTicks}}", playbackTicks);
         }
 
-        private static string ReplaceBaseKeywords(string inStr, BaseItem e)
+        private string ReplaceBaseKeywords(string inStr, BaseItem e, string trigger)
         {
-            return inStr.Replace("{{ItemType}}", e.GetType().Name).Replace("{{ItemName}}", e.Name)
-                .Replace("{{ItemNameParent}}", e.Parent.Name).Replace("{{ItemNameGrandparent}}", e.Parent.Parent.Name)
+            return inStr
+                .Replace("{{Event}}",  trigger)
+                .Replace("{{ItemType}}", e.GetType().Name)
+                .Replace("{{ItemName}}", e.Name)
+                .Replace("{{ItemNameParent}}", e.Parent.Name)
+                .Replace("{{ItemNameGrandparent}}", e.Parent.Parent.Name)
                 .Replace("{{ItemID}}", e.Id.ToString())
                 .Replace("{{ItemRunTimeTicks}}", e.RunTimeTicks.GetValueOrDefault().ToString())
                 .Replace("{{ItemIndex}}", e.IndexNumber.GetValueOrDefault().ToString())
                 .Replace("{{ItemParentIndex}}", e.ParentIndexNumber.GetValueOrDefault().ToString())
-                .Replace("{{ItemCriticRating}}", e.CriticRating.GetValueOrDefault().ToString())
-                .Replace("{{ItemCommunityRating}}", e.CommunityRating.GetValueOrDefault().ToString())
-                .Replace("{{ItemPremiereDate}}", e.PremiereDate.GetValueOrDefault().ToString())
                 .Replace("{{ItemDateAdded}}", e.DateCreated.ToString())
                 .Replace("{{ItemYear}}", e.ProductionYear.GetValueOrDefault().ToString())
-                .Replace("{{ItemBitrate}}", e.TotalBitrate.ToString())
-                .Replace("{{ItemGenre}}",  string.Join(",", e.Genres));
+                .Replace("{{ItemGenre}}",  string.Join(",", e.Genres))
+                .Replace("{{ServerID}}",  _appHost.SystemId)
+                .Replace("{{ServerName}}",  _appHost.FriendlyName)
+                .Replace("{{TimeStamp}}",  DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
         }
     }
 }
