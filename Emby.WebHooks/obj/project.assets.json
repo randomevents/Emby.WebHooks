@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "MediaBrowser.Common/4.1.0.26": {
+      "MediaBrowser.Common/4.2.0.40": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/MediaBrowser.Common.dll": {},
@@ -13,10 +13,10 @@
           "lib/netstandard2.0/MediaBrowser.Model.dll": {}
         }
       },
-      "MediaBrowser.Server.Core/4.1.0.26": {
+      "MediaBrowser.Server.Core/4.2.0.40": {
         "type": "package",
         "dependencies": {
-          "MediaBrowser.Common": "4.1.0.26"
+          "MediaBrowser.Common": "4.2.0.40"
         },
         "compile": {
           "lib/netstandard2.0/MediaBrowser.Controller.dll": {}
@@ -52,28 +52,28 @@
     }
   },
   "libraries": {
-    "MediaBrowser.Common/4.1.0.26": {
-      "sha512": "Fz/mKHjsT8YWyEVHU2wjlZhhc2xfNZhK3rsqrQKXLiWJwDxcNAIrs5hVKCEkoCBGHikQ9SMGUSKBsnoU5LC9LA==",
+    "MediaBrowser.Common/4.2.0.40": {
+      "sha512": "nlefT8zC/wZQlB9kFYvFds6mVltvcFeTgA2yRYhYlrseFpDjNihdLObw6NUlcRtxNkpU0t9gk9K/KK+rdZRmZQ==",
       "type": "package",
-      "path": "mediabrowser.common/4.1.0.26",
+      "path": "mediabrowser.common/4.2.0.40",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/MediaBrowser.Common.dll",
         "lib/netstandard2.0/MediaBrowser.Model.dll",
-        "mediabrowser.common.4.1.0.26.nupkg.sha512",
+        "mediabrowser.common.4.2.0.40.nupkg.sha512",
         "mediabrowser.common.nuspec"
       ]
     },
-    "MediaBrowser.Server.Core/4.1.0.26": {
-      "sha512": "SaCgwGj9OD67DpdIi01pypH6e6cT08mXbNnzvr+mnNufzUUkIIJswYQHCf55m87y9+1x9BE05iF76PxBCAAYDA==",
+    "MediaBrowser.Server.Core/4.2.0.40": {
+      "sha512": "xZo0CsnZsp72/wnwKxGKZmBbb69/9HJBPpKCLyKQERofz/oRe0rLQ487i80OhSki/wbyhoPoF3o8lQJgfWLigg==",
       "type": "package",
-      "path": "mediabrowser.server.core/4.1.0.26",
+      "path": "mediabrowser.server.core/4.2.0.40",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/MediaBrowser.Controller.dll",
-        "mediabrowser.server.core.4.1.0.26.nupkg.sha512",
+        "mediabrowser.server.core.4.2.0.40.nupkg.sha512",
         "mediabrowser.server.core.nuspec"
       ]
     },
@@ -223,7 +223,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "MediaBrowser.Server.Core >= 4.1.0.26",
+      "MediaBrowser.Server.Core >= 4.2.0.40",
       "NETStandard.Library >= 2.0.0"
     ]
   },
@@ -268,7 +268,7 @@
         "dependencies": {
           "MediaBrowser.Server.Core": {
             "target": "Package",
-            "version": "[4.1.0.26, )"
+            "version": "[4.2.0.40, )"
           },
           "NETStandard.Library": {
             "suppressParent": "All",

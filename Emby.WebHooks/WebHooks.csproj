@@ -10,6 +10,6 @@
   <EmbeddedResource Include="Configuration\config.html" />
 </ItemGroup>
 <ItemGroup>
-  <PackageReference Include="MediaBrowser.Server.Core" Version="4.1.0.26" />
+  <PackageReference Include="MediaBrowser.Server.Core" Version="4.2.0.40" />
 </ItemGroup>
 </Project>

@@ -229,22 +229,21 @@ namespace Emby.WebHooks
             Replace("{{TimeStamp}}",  DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
         }
 
-        private static string ReplaceBaseKeywords(string inStr, BaseItem e) {
-            return inStr.Replace("{{ItemType}}", e.GetType().Name ).
-            Replace("{{ItemName}}",  e.Name).
-            Replace("{{ItemNameParent}}", e.Parent.Name).
-            Replace("{{ItemNameGrandparent}}", e.Parent.Parent.Name).
-            Replace("{{ItemID}}", e.Id.ToString()).
-            Replace("{{ItemRunTimeTicks}}",  e.RunTimeTicks.GetValueOrDefault().ToString()).
-            Replace("{{ItemIndex}}",  e.IndexNumber.GetValueOrDefault().ToString()).
-            Replace("{{ItemParentIndex}}",  e.ParentIndexNumber.GetValueOrDefault().ToString()).
-            Replace("{{ItemCriticRating}}",  e.CriticRating.GetValueOrDefault().ToString()).
-            Replace("{{ItemCommunityRating}}",  e.CommunityRating.GetValueOrDefault().ToString()).
-            Replace("{{ItemPremiereDate}}",  e.PremiereDate.GetValueOrDefault().ToString()).
-            Replace("{{ItemDateAdded}}",  e.DateCreated.ToString()).
-            Replace("{{ItemYear}}",  e.ProductionYear.GetValueOrDefault().ToString()).
-            Replace("{{ItemBitrate}}",  e.TotalBitrate.GetValueOrDefault().ToString()).
-            Replace("{{ItemGenre}}",  string.Join(",", e.Genres));
+        private static string ReplaceBaseKeywords(string inStr, BaseItem e)
+        {
+            return inStr.Replace("{{ItemType}}", e.GetType().Name).Replace("{{ItemName}}", e.Name)
+                .Replace("{{ItemNameParent}}", e.Parent.Name).Replace("{{ItemNameGrandparent}}", e.Parent.Parent.Name)
+                .Replace("{{ItemID}}", e.Id.ToString())
+                .Replace("{{ItemRunTimeTicks}}", e.RunTimeTicks.GetValueOrDefault().ToString())
+                .Replace("{{ItemIndex}}", e.IndexNumber.GetValueOrDefault().ToString())
+                .Replace("{{ItemParentIndex}}", e.ParentIndexNumber.GetValueOrDefault().ToString())
+                .Replace("{{ItemCriticRating}}", e.CriticRating.GetValueOrDefault().ToString())
+                .Replace("{{ItemCommunityRating}}", e.CommunityRating.GetValueOrDefault().ToString())
+                .Replace("{{ItemPremiereDate}}", e.PremiereDate.GetValueOrDefault().ToString())
+                .Replace("{{ItemDateAdded}}", e.DateCreated.ToString())
+                .Replace("{{ItemYear}}", e.ProductionYear.GetValueOrDefault().ToString())
+                .Replace("{{ItemBitrate}}", e.TotalBitrate.ToString())
+                .Replace("{{ItemGenre}}",  string.Join(",", e.Genres));
         }
     }
 }
